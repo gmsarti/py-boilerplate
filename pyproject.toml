@@ -1,0 +1,61 @@
+[project]
+name = "py-boilerplate"
+version = "0.1.0"
+description = "A boilerplate for a fast and robust python project"
+readme = "README.md"
+authors = [{ name = "Gustavo Sarti", email = "gmsarti@gmail.com" }]
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+py-boilerplate = "py_boilerplate:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",   # pycodestyle (erros e avisos de estilo)
+    "F",   # Pyflakes (variáveis não usadas, imports quebrados)
+    "I",   # isort (ordenação automática de imports)
+    "B",   # flake8-bugbear (pega bugs comuns e armadilhas de design)
+    "UP",  # pyupgrade (força sintaxe moderna do Python)
+    "SIM", # flake8-simplify (sugere simplificações de código)
+    "S",   # flake8-bandit (análise estática de segurança)
+    "C90", # McCabe (alerta se uma função ficar complexa demais)
+    "PT",  # flake8-pytest-style (boas práticas nos testes)
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Permite usar o comando 'assert' livremente dentro da pasta de testes
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10 # Força funções pequenas e fáceis de manter
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+pretty = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+    "error", # Transforma DeprecationWarnings em erros reais nos testes
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.0",
+]
